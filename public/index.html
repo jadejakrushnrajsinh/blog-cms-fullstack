@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog CMS | Full-Stack Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Login/Register Section -->
+        <div class="auth-container" id="authContainer">
+            <div class="auth-form">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" id="loginTab">Login</div>
+                    <div class="auth-tab" id="registerTab">Register</div>
+                </div>
+
+                <div class="demo-notice">
+                    <i class="fas fa-info-circle"></i> Full-stack Blog CMS with MongoDB backend.
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" placeholder="Enter your email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password"
+                            required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="hidden">
+                    <div class="form-group">
+                        <label for="registerName">Full Name</label>
+                        <input type="text" class="form-control" id="registerName" placeholder="Enter your full name"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" class="form-control" id="registerEmail" placeholder="Enter your email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" class="form-control" id="registerPassword"
+                            placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="registerConfirmPassword"
+                            placeholder="Confirm your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard (hidden by default) -->
+        <div class="dashboard hidden" id="dashboard">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Blog CMS</h2>
+                    <p>Welcome, <span id="userName">User</span>!</p>
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="menu-item active" data-section="dashboard-section">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </li>
+                    <li class="menu-item" data-section="blogs-section">
+                        <i class="fas fa-blog"></i> All Blogs
+                    </li>
+                    <li class="menu-item" data-section="create-section">
+                        <i class="fas fa-edit"></i> Create New
+                    </li>
+                    <li class="menu-item" data-section="contact-section">
+                        <i class="fas fa-envelope"></i> Contact
+                    </li>
+                    <li class="menu-item" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Dashboard Section -->
+                <div class="content-section" id="dashboard-section">
+                    <div class="content-header">
+                        <h2>Dashboard</h2>
+                        <button class="btn btn-primary" id="createNewBtn">
+                            <i class="fas fa-plus"></i> Create New Post
+                        </button>
+                    </div>
+
+                    <h3>Your Recent Posts</h3>
+                    <div class="blog-list" id="recentPosts">
+                        <!-- Posts will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Blogs Section -->
+                <div class="content-section hidden" id="blogs-section">
+                    <div class="content-header">
+                        <h2>All Blog Posts</h2>
+                        <div class="search-box">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search posts...">
+                        </div>
+                    </div>
+
+                    <div class="blog-list" id="allPosts">
+                        <!-- All posts will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Create/Edit Section -->
+                <div class="content-section hidden" id="create-section">
+                    <div class="content-header">
+                        <h2 id="formTitle">Create New Post</h2>
+                    </div>
+
+                    <div class="editor-container">
+                        <div class="form-group">
+                            <label for="postTitle">Post Title</label>
+                            <input type="text" class="form-control" id="postTitle" placeholder="Enter post title">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postExcerpt">Excerpt</label>
+                            <textarea class="form-control" id="postExcerpt" rows="3"
+                                placeholder="Brief description of your post"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postContent">Content</label>
+                            <textarea class="form-control" id="postContent" rows="10"
+                                placeholder="Write your content here..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postImage">Image</label>
+                            <input type="file" class="form-control" id="postImage" accept="image/*">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postStatus">Status</label>
+                            <select class="form-control" id="postStatus">
+                                <option value="draft">Draft</option>
+                                <option value="published">Published</option>
+                            </select>
+                        </div>
+
+                        <div class="editor-actions">
+                            <button class="btn btn-success" id="saveBtn">Save Draft</button>
+                            <button class="btn btn-primary" id="publishBtn">Publish</button>
+                            <button class="btn btn-danger" id="cancelBtn">Cancel</button>
+                        </div>
+
+                        <!-- Contact Section -->
+                        <div class="content-section hidden" id="contact-section">
+                            <div class="content-header">
+                                <h2>Contact</h2>
+                            </div>
+                            <p>Get in touch: <a
+                                    href="mailto:krushnrajsinhjadeja777@gmail.com">krushnrajsinhjadeja777@gmail.com</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
+const Post = require("../models/Post");
+const { authenticateToken } = require("../middleware/auth");
+
+const router = express.Router();
+
+// Configure multer for image upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// Get all posts (public for published, user's own for drafts)
+router.get("/", authenticateToken, async (req, res) => {
+  try {
+    const posts = await Post.find({
+      $or: [{ status: "published" }, { author: req.user.userId }],
+    })
+      .populate("author", "name email")
+      .sort({ createdAt: -1 });
+
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Get single post
+router.get("/:id", authenticateToken, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id).populate(
+      "author",
+      "name email"
+    );
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Check if user can view this post
+    if (
+      post.status === "draft" &&
+      post.author._id.toString() !== req.user.userId
+    ) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Create new post
+router.post(
+  "/",
+  authenticateToken,
+  upload.single("image"),
+  async (req, res) => {
+    try {
+      const { title, content, excerpt, status } = req.body;
+
+      const post = new Post({
+        title,
+        content,
+        excerpt,
+        image: req.file ? "/uploads/" + req.file.filename : undefined,
+        status: status || "draft",
+        author: req.user.userId,
+      });
+
+      await post.save();
+      await post.populate("author", "name email");
+
+      res.status(201).json(post);
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  }
+);
+
+// Update post
+router.put(
+  "/:id",
+  authenticateToken,
+  upload.single("image"),
+  async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+
+      // Check if user owns the post
+      if (post.author.toString() !== req.user.userId) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+
+      const { title, content, excerpt, status } = req.body;
+      post.title = title || post.title;
+      post.content = content || post.content;
+      post.excerpt = excerpt || post.excerpt;
+      post.image = req.file ? "/uploads/" + req.file.filename : post.image;
+      post.status = status || post.status;
+
+      await post.save();
+      await post.populate("author", "name email");
+
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  }
+);
+
+// Delete post
+router.delete("/:id", authenticateToken, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Check if user owns the post
+    if (post.author.toString() !== req.user.userId) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    await Post.findByIdAndDelete(req.params.id);
+    res.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+module.exports = router;
