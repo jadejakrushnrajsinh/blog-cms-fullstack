@@ -17,8 +17,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Connect to MongoDB
+const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/blogdb";
 mongoose
-  .connect("mongodb://localhost:27017/blogdb", {
+  .connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
