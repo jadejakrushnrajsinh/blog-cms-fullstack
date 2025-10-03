@@ -26,6 +26,36 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Get published posts (public)
+router.get("/public", async (req, res) => {
+  try {
+    const posts = await Post.find({ status: "published" })
+      .populate("author", "name email")
+      .sort({ createdAt: -1 });
+
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Get single published post (public)
+router.get("/public/:id", async (req, res) => {
+  try {
+    const post = await Post.findOne({
+      _id: req.params.id,
+      status: "published",
+    }).populate("author", "name email");
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 // Get all posts (public for published, user's own for drafts)
 router.get("/", authenticateToken, async (req, res) => {
   try {

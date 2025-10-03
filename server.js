@@ -38,7 +38,7 @@ const authRoutes = require("./routes/auth");
 const postRoutes = require("./routes/posts");
 
 app.use("/api/auth", authRoutes);
-app.use("/api/posts", authenticateToken, postRoutes);
+app.use("/api/posts", postRoutes);
 
 // Serve frontend index.html for all other routes (SPA support)
 app.get("*", (req, res) => {

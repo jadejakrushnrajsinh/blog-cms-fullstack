@@ -4,184 +4,1044 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog CMS | Full-Stack Demo</title>
+    <title>Anime Insights Blog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #6a0dad;
+            --secondary: #ff69b4;
+            --dark: #1a1a2e;
+            --light: #f4f4f8;
+            --accent: #00b4d8;
+            --error: #e74c3c;
+            --success: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--secondary);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--dark);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .search-bar {
+            display: flex;
+            margin-left: 1rem;
+        }
+
+        .search-bar input {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+            width: 200px;
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 26, 46, 0.8), rgba(26, 26, 46, 0.8)), url('https://wallpaperaccess.com/full/39038.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Error Message */
+        .error-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .error-icon {
+            font-size: 4rem;
+            color: var(--error);
+            margin-bottom: 1rem;
+        }
+
+        .error-title {
+            font-size: 2rem;
+            color: var(--error);
+            margin-bottom: 1rem;
+        }
+
+        .error-message {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        /* Blog Posts */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .post-card:hover .post-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-category {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            flex-grow: 1;
+        }
+
+        .post-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: auto;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category-filter {
+            padding: 8px 16px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-filter.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .category-filter:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Single Post */
+        .single-post {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .single-post-header {
+            margin-bottom: 2rem;
+        }
+
+        .single-post-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .single-post-meta {
+            display: flex;
+            gap: 1rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .single-post-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .single-post-content {
+            line-height: 1.8;
+        }
+
+        .single-post-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .back-btn {
+            margin-top: 2rem;
+            display: inline-block;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .loader-circle {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(106, 13, 173, 0.2);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+
+            .search-bar {
+                margin: 1rem 0 0;
+                width: 100%;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .category-filters {
+                width: 100%;
+            }
+
+            .single-post-title {
+                font-size: 1.8rem;
+            }
+
+            .single-post-image {
+                height: 250px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div class="app-container">
-        <!-- Login/Register Section -->
-        <div class="auth-container" id="authContainer">
-            <div class="auth-form">
-                <div class="auth-tabs">
-                    <div class="auth-tab active" id="loginTab">Login</div>
-                    <div class="auth-tab" id="registerTab">Register</div>
-                </div>
-
-                <div class="demo-notice">
-                    <i class="fas fa-info-circle"></i> Full-stack Blog CMS with MongoDB backend.
-                </div>
-
-                <!-- Login Form -->
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" class="form-control" id="loginEmail" placeholder="Enter your email"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password"
-                            required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-
-                <!-- Register Form -->
-                <form id="registerForm" class="hidden">
-                    <div class="form-group">
-                        <label for="registerName">Full Name</label>
-                        <input type="text" class="form-control" id="registerName" placeholder="Enter your full name"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" class="form-control" id="registerEmail" placeholder="Enter your email"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Password</label>
-                        <input type="password" class="form-control" id="registerPassword"
-                            placeholder="Create a password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerConfirmPassword">Confirm Password</label>
-                        <input type="password" class="form-control" id="registerConfirmPassword"
-                            placeholder="Confirm your password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Dashboard (hidden by default) -->
-        <div class="dashboard hidden" id="dashboard">
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <div class="sidebar-header">
-                    <h2>Blog CMS</h2>
-                    <p>Welcome, <span id="userName">User</span>!</p>
-                </div>
-                <ul class="sidebar-menu">
-                    <li class="menu-item active" data-section="dashboard-section">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </li>
-                    <li class="menu-item" data-section="blogs-section">
-                        <i class="fas fa-blog"></i> All Blogs
-                    </li>
-                    <li class="menu-item" data-section="create-section">
-                        <i class="fas fa-edit"></i> Create New
-                    </li>
-                    <li class="menu-item" data-section="contact-section">
-                        <i class="fas fa-envelope"></i> Contact
-                    </li>
-                    <li class="menu-item" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </li>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo"><i class="fas fa-dragon"></i>Anime<span>Insights</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-tags"></i> Categories</a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> About</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
                 </ul>
-            </div>
-
-            <!-- Main Content -->
-            <div class="main-content">
-                <!-- Dashboard Section -->
-                <div class="content-section" id="dashboard-section">
-                    <div class="content-header">
-                        <h2>Dashboard</h2>
-                        <button class="btn btn-primary" id="createNewBtn">
-                            <i class="fas fa-plus"></i> Create New Post
-                        </button>
-                    </div>
-
-                    <h3>Your Recent Posts</h3>
-                    <div class="blog-list" id="recentPosts">
-                        <!-- Posts will be loaded here -->
-                    </div>
-                </div>
-
-                <!-- Blogs Section -->
-                <div class="content-section hidden" id="blogs-section">
-                    <div class="content-header">
-                        <h2>All Blog Posts</h2>
-                        <div class="search-box">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Search posts...">
-                        </div>
-                    </div>
-
-                    <div class="blog-list" id="allPosts">
-                        <!-- All posts will be loaded here -->
-                    </div>
-                </div>
-
-                <!-- Create/Edit Section -->
-                <div class="content-section hidden" id="create-section">
-                    <div class="content-header">
-                        <h2 id="formTitle">Create New Post</h2>
-                    </div>
-
-                    <div class="editor-container">
-                        <div class="form-group">
-                            <label for="postTitle">Post Title</label>
-                            <input type="text" class="form-control" id="postTitle" placeholder="Enter post title">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="postExcerpt">Excerpt</label>
-                            <textarea class="form-control" id="postExcerpt" rows="3"
-                                placeholder="Brief description of your post"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="postContent">Content</label>
-                            <textarea class="form-control" id="postContent" rows="10"
-                                placeholder="Write your content here..."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="postImage">Image</label>
-                            <input type="file" class="form-control" id="postImage" accept="image/*">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="postStatus">Status</label>
-                            <select class="form-control" id="postStatus">
-                                <option value="draft">Draft</option>
-                                <option value="published">Published</option>
-                            </select>
-                        </div>
-
-                        <div class="editor-actions">
-                            <button class="btn btn-success" id="saveBtn">Save Draft</button>
-                            <button class="btn btn-primary" id="publishBtn">Publish</button>
-                            <button class="btn btn-danger" id="cancelBtn">Cancel</button>
-                        </div>
-
-                        <!-- Contact Section -->
-                        <div class="content-section hidden" id="contact-section">
-                            <div class="content-header">
-                                <h2>Contact</h2>
-                            </div>
-                            <p>Get in touch: <a
-                                    href="mailto:krushnrajsinhjadeja777@gmail.com">krushnrajsinhjadeja777@gmail.com</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            </nav>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search posts...">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
             </div>
         </div>
-    </div>
+    </header>
 
-    <script src="app.js"></script>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Discover the World of Anime</h1>
+                <p>Explore in-depth analysis, reviews, and insights about your favorite anime series and characters.</p>
+                <a href="#posts" class="btn">Explore Posts</a>
+            </div>
+        </section>
+
+        <!-- Blog Posts -->
+        <section class="container" id="posts">
+            <div class="filters">
+                <h2>Latest Posts</h2>
+                <div class="category-filters">
+                    <div class="category-filter active" data-category="all">All</div>
+                    <div class="category-filter" data-category="Anime">Anime</div>
+                </div>
+            </div>
+
+            <div class="posts-grid" id="posts-container">
+                <!-- Posts will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AnimeInsights</h3>
+                    <p>Your go-to destination for deep dives into anime storytelling, character analysis, and industry
+                        insights.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="#"><i class="fas fa-arrow-right"></i> Home</a></p>
+                    <p><a href="#"><i class="fas fa-arrow-right"></i> Categories</a></p>
+                    <p><a href="#"><i class="fas fa-arrow-right"></i> About Us</a></p>
+                    <p><a href="#"><i class="fas fa-arrow-right"></i> Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest updates and exclusive content.</p>
+                    <div class="search-bar">
+                        <input type="email" placeholder="Your email address">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AnimeInsights. All rights reserved. Created by Jadeja Krushnrajsinh Sinh</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample posts data with all 20 posts
+        const samplePosts = [
+            {
+                id: 1,
+                title: "How Anime Openings Reflect Character Growth",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Discover how iconic anime openings mirror the themes and growth of the characters you love.",
+                imageUrl: "https://wallpaperaccess.com/full/39038.jpg",
+                slug: "anime-openings-character-growth",
+                fullContent: `Anime openings are more than just catchy tunes accompanied by flashy visuals—they’re a reflection of a character’s journey, personality, and growth over the series. A well-crafted opening can give the audience subtle insights into the protagonist's mindset, foreshadow story developments, or reflect the emotional tone of the series.`
+            },
+            {
+                id: 2,
+                title: "Productivity Lessons From Naruto’s Training Arcs",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Learn how Naruto’s determination and training routines can inspire your own productivity.",
+                imageUrl: "https://wallpaperaccess.com/full/8006.jpg",
+                slug: "naruto-productivity-lessons",
+                fullContent: `Naruto’s journey from an underdog to a legendary ninja offers a masterclass in perseverance, discipline, and productivity. His training arcs provide actionable lessons that can be applied in daily life to enhance personal and professional growth.`
+            },
+            {
+                id: 3,
+                title: "90s Anime Nostalgia: Why Old Classics Still Hit Different",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Take a throwback journey into 90s anime and see why fans still cherish the classics.",
+                imageUrl: "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Why-Anime-Are-So-Short-Classics-Dragon-Ball-Sailor-Moon-Gundam.jpeg?q=50&fit=crop&w=825&dpr=1.5",
+                slug: "90s-anime-nostalgia",
+                fullContent: `The 1990s were a golden era for anime, producing series that have left an indelible mark on fans worldwide. These shows aren’t just fond memories—they continue to resonate with audiences because of their unique storytelling, memorable characters, and the distinct animation style that defined the decade.`
+            },
+            {
+                id: 4,
+                title: "Beginner’s Guide To Writing Anime Blog Posts",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "A simple breakdown of how to structure anime blog posts for readers and fans.",
+                imageUrl: "https://wallpaperaccess.com/full/2433839.jpg",
+                slug: "anime-blogging-guide",
+                fullContent: "Beginner's Guide To Writing Anime Blog Posts. A simple breakdown of how to structure anime blog posts for readers and fans. When starting an anime blog, it's important to choose a niche that you're passionate about."
+            },
+            {
+                id: 5,
+                title: "10 Surprising Facts You Didn’t Know About One Piece",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "From hidden easter eggs to real-world inspirations, explore fun facts about One Piece.",
+                imageUrl: "https://wallpaperaccess.com/full/17350.jpg",
+                slug: "one-piece-facts",
+                fullContent: "10 Surprising Facts You Didn’t Know About One Piece. From hidden easter eggs to real-world inspirations, explore fun facts about One Piece. One Piece is one of the longest-running anime series, created by Eiichiro Oda."
+            },
+            {
+                id: 6,
+                title: "Anime-Inspired Snacks Straight From Studio Ghibli",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Recreate delicious treats and snacks inspired by Studio Ghibli’s magical worlds.",
+                imageUrl: "https://dagashi-no-tatsujin.com/cdn/shop/articles/japanese-sweets-ghibli-inspired-5-picks-nostalgia-and-story_8f09b09f-1f4e-40cf-8afd-470d04da7fde_900x.jpg?v=1756810032",
+                slug: "ghibli-inspired-snacks",
+                fullContent: `Studio Ghibli films are celebrated for their breathtaking animation, imaginative worlds, and unforgettable characters—but they’re also famous for the delicious food that appears throughout the stories.`
+            },
+            {
+                id: 7,
+                title: "Attack on Titan: The Philosophy Behind Freedom",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Dive deep into the themes of freedom, morality, and survival explored in Attack on Titan.",
+                imageUrl: "https://wallpaperaccess.com/full/108288.jpg",
+                slug: "attack-on-titan-freedom",
+                fullContent: `Attack on Titan is more than an action-packed anime about humans fighting colossal beasts—it’s a deep exploration of freedom, morality, and the human condition.`
+            },
+            {
+                id: 8,
+                title: "Why Slice of Life Anime Heals the Soul",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Explore how slice of life anime brings comfort and calmness to everyday struggles.",
+                imageUrl: "https://wallpaperaccess.com/full/9264.jpg",
+                slug: "slice-of-life-healing",
+                fullContent: `Slice of life anime may lack the epic battles or fantastical worlds of other genres, but their quiet, heartfelt storytelling holds a unique power: they heal the soul.`
+            },
+            {
+                id: 9,
+                title: "Death Note Psychology: Light vs. L’s Mind Games",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Unpack the genius battle of wits between Light Yagami and L in Death Note.",
+                imageUrl: "https://wallpaperaccess.com/full/549285.jpg",
+                slug: "death-note-psychology",
+                fullContent: `Death Note isn’t just a battle of good versus evil—it’s a cerebral showdown between two brilliant minds. The psychological tension between Light Yagami and L captivates viewers because it transcends typical anime conflicts.`
+            },
+            {
+                id: 10,
+                title: "Anime Soundtracks That Will Give You Goosebumps",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "From epic shounen openings to tear-jerking endings, these soundtracks hit hard.",
+                imageUrl: "https://wallpaperaccess.com/full/8221565.jpg",
+                slug: "anime-soundtracks-best",
+                fullContent: `Music in anime is more than just background noise—it’s a storytelling force that elevates emotion, atmosphere, and character moments. The right soundtrack can make a fight scene exhilarating, a quiet moment heart-wrenching, or a montage utterly unforgettable.`
+            },
+            {
+                id: 11,
+                title: "The Hidden Symbolism in Fullmetal Alchemist",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Alchemy, sacrifice, and human desire—decoding the deeper meaning in FMA.",
+                imageUrl: "https://fictionhorizon.com/wp-content/uploads/2023/01/FMA1.jpg",
+                slug: "fullmetal-alchemist-symbolism",
+                fullContent: `Fullmetal Alchemist is widely celebrated for its action-packed story and compelling characters, but beneath its engaging narrative lies a rich tapestry of symbolism.`
+            },
+            {
+                id: 12,
+                title: "Cosplay Culture: More Than Just Costumes",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Explore the passion, creativity, and community behind cosplay culture.",
+                imageUrl: "https://cdn.shopify.com/s/files/1/0631/3931/5800/files/Dungeons_and_Dragons_Costumes.png?v=1757424382",
+                slug: "cosplay-anime-culture",
+                fullContent: `Cosplay is often seen simply as dressing up as a favorite character, but it’s much more than that—it’s a vibrant form of self-expression, creativity, and community.`
+            },
+            {
+                id: 13,
+                title: "Top 10 Strongest Female Characters in Anime",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "From warriors to strategists, celebrate the most powerful women in anime.",
+                imageUrl: "https://otakukart.com/wp-content/uploads/2021/11/Top-10-strongest-female-anime-characters.jpg",
+                slug: "strongest-female-anime-characters",
+                fullContent: `Anime has long been celebrated for its powerful, complex, and inspiring female characters. From fearless warriors to brilliant strategists, these women defy stereotypes and leave lasting impressions on fans.`
+            },
+            {
+                id: 14,
+                title: "Why Demon Slayer’s Animation Changed the Game",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Explore how Ufotable’s animation style redefined modern shounen anime.",
+                imageUrl: "https://wallpaperaccess.com/full/2827067.jpg",
+                slug: "demon-slayer-animation",
+                fullContent: `Since its debut, Demon Slayer: Kimetsu no Yaiba has been praised not just for its story and characters, but for its revolutionary animation.`
+            },
+            {
+                id: 15,
+                title: "Sports Anime That Will Motivate You to Hustle",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Discover how sports anime inspires hard work, teamwork, and perseverance in everyday life.",
+                imageUrl: "https://wallpaperaccess.com/full/2827067.jpg",
+                slug: "sports-anime-motivate-hustle",
+                fullContent: `Sports anime has a unique way of inspiring viewers, blending intense competition, personal growth, and teamwork into stories that motivate us to push our limits.`
+            },
+            {
+                id: 16,
+                title: "The Dark Themes of Tokyo Ghoul Explained",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Identity, morality, and survival—the haunting layers of Tokyo Ghoul.",
+                imageUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.V_A6yjf4JUqnnCeVN3pl6AHaEK%3Fpid%3DApi&f=1&ipt=4b8d6c40869fcbd0cdc668c1391457809ad37e33371bb79b8fcf4406fdfb1e3",
+                slug: "tokyo-ghoul-dark-themes",
+                fullContent: `Tokyo Ghoul isn’t just a story about humans and ghouls—it’s a haunting exploration of identity, morality, and the darkness that lurks within society and the human psyche.`
+            },
+            {
+                id: 17,
+                title: "Why Fans Still Love Dragon Ball After Decades",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "From Goku’s determination to epic battles, Dragon Ball remains legendary.",
+                imageUrl: "https://wallpaperaccess.com/full/202288.jpg",
+                slug: "dragon-ball-legacy",
+                fullContent: `Few anime have achieved the lasting cultural impact of Dragon Ball. Since its debut in the 1980s, the series has captivated audiences worldwide with its thrilling battles, memorable characters, and enduring themes.`
+            },
+            {
+                id: 18,
+                title: "Best Anime Couples That Made Us Believe in Love",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "From childhood sweethearts to tragic romances, anime love stories hit hard.",
+                imageUrl: "https://static0.moviewebimages.com/wordpress/wp-content/uploads/2023/08/20.jpg?q=50&fit=crop&w=825&dpr=1.5",
+                slug: "best-anime-couples",
+                fullContent: `Anime has a unique way of portraying love—blending emotion, humor, and heartfelt moments to create couples that leave a lasting impression.`
+            },
+            {
+                id: 19,
+                title: "How Studio Ghibli Captures the Magic of Everyday Life",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "Explore the subtle beauty of Ghibli films and their slice-of-life storytelling.",
+                imageUrl: "https://substackcdn.com/image/fetch/$s_!UJFM!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F87f0c753-2b2e-45c0-b343-b53aa449dc43_6912x3456.jpeg",
+                slug: "studio-ghibli-magic",
+                fullContent: `Studio Ghibli films are renowned for their breathtaking visuals, imaginative storytelling, and unforgettable characters—but one of their most remarkable achievements is the way they capture the magic of everyday life.`
+            },
+            {
+                id: 20,
+                title: "The Future of Anime: AI, VR, and Beyond",
+                category: "Anime",
+                author: "Jadeja Krushnrajsinh Sinh",
+                date: "September 15, 2025",
+                excerpt: "How technology like AI and VR could transform the anime industry in the next decade.",
+                imageUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic1.cbrimages.com%2Fwordpress%2Fwp-content%2Fuploads%2F2023%2F09%2Fsword-art-online-digimon-adventure-and-serial-experiments-lain.jpg&f=1&nofb=1&ipt=e5b8d6c40869fcbd0cdc668c1391457809ad37e33371bb79b8fcf4406fdfb1e3",
+                slug: "future-of-anime",
+                fullContent: `The anime industry is on the brink of a technological revolution. With advancements in artificial intelligence, virtual reality, and other emerging technologies, the way anime is created and consumed is set to change dramatically in the coming decade.`
+            }
+        ];
+
+        // Set the samplePosts to window for other pages to access
+        window.samplePosts = samplePosts;
+
+        // DOM Elements
+        const postsContainer = document.getElementById('posts-container');
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+
+        // Display posts function
+        function displayPosts(postsToDisplay) {
+            postsContainer.innerHTML = '';
+
+            if (postsToDisplay.length === 0) {
+                postsContainer.innerHTML = `
+                    <div class="error-container" style="grid-column: 1 / -1;">
+                        <div class="error-icon">🔍</div>
+                        <h2 class="error-title">No Posts Found</h2>
+                        <p class="error-message">No posts match your search criteria. Try different keywords or browse all posts.</p>
+                        <a href="#" class="btn" onclick="resetFilters()">Browse All Posts</a>
+                    </div>
+                `;
+                return;
+            }
+
+            postsToDisplay.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post-card';
+                postElement.innerHTML = `
+                    <div class="post-image">
+                        <img src="${post.imageUrl}" alt="${post.title}">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-category">${post.category}</span>
+                        <h3 class="post-title"><a href="#" onclick="viewPost(${post.id})">${post.title}</a></h3>
+                        <p class="post-excerpt">${post.excerpt}</p>
+                        <div class="post-meta">
+                            <span>By ${post.author}</span>
+                            <span>${post.date}</span>
+                        </div>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        // Filter by category
+        function filterPosts(category) {
+            if (category === 'all') {
+                displayPosts(samplePosts);
+            } else {
+                const filteredPosts = samplePosts.filter(post => post.category === category);
+                displayPosts(filteredPosts);
+            }
+        }
+
+        // Search posts
+        function searchPosts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm.trim() === '') {
+                displayPosts(samplePosts);
+                return;
+            }
+
+            const filteredPosts = samplePosts.filter(post =>
+                post.title.toLowerCase().includes(searchTerm) ||
+                post.excerpt.toLowerCase().includes(searchTerm) ||
+                post.fullContent.toLowerCase().includes(searchTerm)
+            );
+
+            displayPosts(filteredPosts);
+        }
+
+        // Reset filters
+        function resetFilters() {
+            searchInput.value = '';
+            categoryFilters.forEach(f => f.classList.remove('active'));
+            document.querySelector('[data-category="all"]').classList.add('active');
+            displayPosts(samplePosts);
+        }
+
+        // View single post
+        function viewPost(id) {
+            const post = samplePosts.find(p => p.id === id);
+            if (post) {
+                // In a real app, this would navigate to a post page
+                // For this demo, we'll show a modal-like view
+                document.body.innerHTML = `
+                    <header>
+                        <div class="container header-content">
+                            <a href="#" class="logo"><i class="fas fa-dragon"></i>Anime<span>Insights</span></a>
+                            <nav>
+                                <ul>
+                                    <li><a href="#" onclick="location.reload()"><i class="fas fa-home"></i> Home</a></li>
+                                    <li><a href="#"><i class="fas fa-tags"></i> Categories</a></li>
+                                    <li><a href="#"><i class="fas fa-user"></i> About</a></li>
+                                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </header>
+                    
+                    <main class="container">
+                        <article class="single-post">
+                            <div class="single-post-header">
+                                <span class="post-category">${post.category}</span>
+                                <h1 class="single-post-title">${post.title}</h1>
+                                <div class="single-post-meta">
+                                    <span>By ${post.author}</span>
+                                    <span>${post.date}</span>
+                                </div>
+                            </div>
+                            <img src="${post.imageUrl}" alt="${post.title}" class="single-post-image">
+                            <div class="single-post-content">
+                                <p>${post.fullContent}</p>
+                            </div>
+                        </article>
+                        <a href="#" class="btn back-btn" onclick="location.reload()"><i class="fas fa-arrow-left"></i> Back to All Posts</a>
+                    </main>
+                    
+                    <footer>
+                        <div class="container">
+                            <div class="footer-content">
+                                <div class="footer-section">
+                                    <h3>About AnimeInsights</h3>
+                                    <p>Your go-to destination for deep dives into anime storytelling, character analysis, and industry insights.</p>
+                                    <div class="social-icons">
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                        <a href="#"><i class="fab fa-facebook"></i></a>
+                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                        <a href="#"><i class="fab fa-discord"></i></a>
+                                    </div>
+                                </div>
+                                <div class="footer-section">
+                                    <h3>Quick Links</h3>
+                                    <p><a href="#" onclick="location.reload()"><i class="fas fa-arrow-right"></i> Home</a></p>
+                                    <p><a href="#"><i class="fas fa-arrow-right"></i> Categories</a></p>
+                                    <p><a href="#"><i class="fas fa-arrow-right"></i> About Us</a></p>
+                                    <p><a href="#"><i class="fas fa-arrow-right"></i> Contact</a></p>
+                                </div>
+                                <div class="footer-section">
+                                    <h3>Connect With Us</h3>
+                                    <p>Follow us on social media for the latest updates and community discussions.</p>
+                                </div>
+                            </div>
+                            <div class="footer-bottom">
+                                <p>&copy; 2025 AnimeInsights. All rights reserved.</p>
+                            </div>
+                        </div>
+                    </footer>
+                `;
+            } else {
+                // Show post not found error
+                document.body.innerHTML = `
+                    <header>
+                        <div class="container header-content">
+                            <a href="#" class="logo"><i class="fas fa-dragon"></i>Anime<span>Insights</span></a>
+                            <nav>
+                                <ul>
+                                    <li><a href="#" onclick="location.reload()"><i class="fas fa-home"></i> Home</a></li>
+                                    <li><a href="#"><i class="fas fa-tags"></i> Categories</a></li>
+                                    <li><a href="#"><i class="fas fa-user"></i> About</a></li>
+                                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </header>
+
+                    <main class="container">
+                        <div class="error-container">
+                            <div class="error-icon">❌</div>
+                            <h2 class="error-title">Post Not Found</h2>
+                            <p class="error-message">The post you're looking for doesn't exist or may have been removed.</p>
+                            <a href="#" class="btn" onclick="location.reload()"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                        </div>
+                    </main>
+
+                    <footer>
+                        <div class="container">
+                            <div class="footer-content">
+                                <div class="footer-section">
+                                    <h3>About AnimeInsights</h3>
+                                    <p>Your go-to destination for deep dives into anime storytelling, character analysis, and industry insights.</p>
+                                    <div class="social-icons">
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                        <a href="#"><i class="fab fa-facebook"></i></a>
+                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                        <a href="#"><i class="fab fa-discord"></i></a>
+                                    </div>
+                                </div>
+                                <div class="footer-section">
+                                    <h3>Quick Links</h3>
+                                    <p><a href="#" onclick="location.reload()"><i class="fas fa-arrow-right"></i> Home</a></p>
+                                    <p><a href="#"><i class="fas fa-arrow-right"></i> Categories</a></p>
+                                    <p><a href="#"><i class="fas fa-arrow-right"></i> About Us</a></p>
+                                    <p><a href="#"><i class="fas fa-arrow-right"></i> Contact</a></p>
+                                </div>
+                                <div class="footer-section">
+                                    <h3>Connect With Us</h3>
+                                    <p>Follow us on social media for the latest updates and community discussions.</p>
+                                </div>
+                            </div>
+                            <div class="footer-bottom">
+                                <p>&copy; 2025 AnimeInsights. All rights reserved.</p>
+                            </div>
+                        </div>
+                    </footer>
+                `;
+            }
+        }
+
+        // Event Listeners
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                categoryFilters.forEach(f => f.classList.remove('active'));
+                filter.classList.add('active');
+                filterPosts(filter.dataset.category);
+            });
+        });
+
+        searchBtn.addEventListener('click', searchPosts);
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                searchPosts();
+            }
+        });
+
+        // Load posts from API or fallback to sample
+        async function loadPosts() {
+            try {
+                const response = await fetch('/api/posts/public');
+                if (response.ok) {
+                    const posts = await response.json();
+                    // Transform API data to match expected format
+                    const transformedPosts = posts.map(post => ({
+                        id: post._id,
+                        title: post.title,
+                        category: "Anime", // Default category since API doesn't have it
+                        author: post.author.name,
+                        date: new Date(post.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        }),
+                        excerpt: post.excerpt,
+                        imageUrl: post.image ? post.image : "https://wallpaperaccess.com/full/39038.jpg",
+                        fullContent: post.content
+                    }));
+                    displayPosts(transformedPosts);
+                } else {
+                    throw new Error('API not available');
+                }
+            } catch (error) {
+                console.log('Using sample posts as fallback');
+                displayPosts(samplePosts);
+            }
+        }
+
+        // Initial load
+        loadPosts();
+    </script>
 </body>
 
 </html>

@@ -26,6 +26,27 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentUser = null;
   let editingPostId = null;
 
+  // Tab switching for auth forms
+  loginTab.addEventListener("click", function () {
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
+  });
+
+  registerTab.addEventListener("click", function () {
+    loginForm.classList.add("hidden");
+    registerForm.classList.remove("hidden");
+    registerTab.classList.add("active");
+    loginTab.classList.remove("active");
+  });
+
+  // Ensure initial state: login form visible
+  loginForm.classList.remove("hidden");
+  registerForm.classList.add("hidden");
+  loginTab.classList.add("active");
+  registerTab.classList.remove("active");
+
   // API base URL
   const API_BASE = "/api";
 
