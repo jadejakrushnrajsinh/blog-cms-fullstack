@@ -117,6 +117,78 @@ A complete full-stack blog content management system with separate admin dashboa
 
    Navigate to `http://localhost:3000` (or your configured port)
 
+## Deployment
+
+### MongoDB Atlas Setup
+
+1. **Create MongoDB Atlas Account**
+
+   - Go to [MongoDB Atlas](https://www.mongodb.com/atlas)
+   - Create a free account and cluster
+
+2. **Get Connection String**
+   - Go to "Clusters" → "Connect" → "Connect your application"
+   - Copy the connection string
+   - Replace `<password>` with your database user password
+   - Replace `<database>` with your desired database name
+
+### Heroku Deployment
+
+1. **Install Heroku CLI**
+
+   ```bash
+   # Download from https://devcenter.heroku.com/articles/heroku-cli
+   ```
+
+2. **Login to Heroku**
+
+   ```bash
+   heroku login
+   ```
+
+3. **Create Heroku App**
+
+   ```bash
+   heroku create your-app-name
+   ```
+
+4. **Set Environment Variables**
+
+   ```bash
+   heroku config:set MONGO_URI="your-mongodb-atlas-connection-string"
+   heroku config:set JWT_SECRET="your-super-secret-jwt-key-here"
+   ```
+
+5. **Deploy to Heroku**
+
+   ```bash
+   git push heroku master
+   ```
+
+6. **Open Your App**
+   ```bash
+   heroku open
+   ```
+
+### Alternative Deployment Options
+
+#### Vercel (Frontend Only)
+
+```bash
+npm install -g vercel
+vercel
+```
+
+#### Railway
+
+- Connect your GitHub repository
+- Automatic deployment with database provisioning
+
+#### DigitalOcean App Platform
+
+- Connect repository
+- Automatic deployment with managed database
+
 ## Usage
 
 ### Accessing the Application

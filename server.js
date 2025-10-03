@@ -17,7 +17,10 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Connect to MongoDB
-const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/blogdb";
+const mongoUri =
+  process.env.MONGO_URI ||
+  process.env.MONGODB_URI ||
+  "mongodb://localhost:27017/blogdb";
 mongoose
   .connect(mongoUri, {
     useNewUrlParser: true,
