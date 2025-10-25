@@ -14,17 +14,19 @@ async function seedData() {
     console.log("Connected to MongoDB for seeding");
 
     // Create a default admin user if not exists
-    const defaultPassword = "admin123";
+    const defaultPassword = "AnimeInsights2024!";
     const hashedPassword = await bcrypt.hash(defaultPassword, 10);
-    let adminUser = await User.findOne({ email: "admin@blog.com" });
+    let adminUser = await User.findOne({ email: "admin@animeinsights.com" });
     if (!adminUser) {
       adminUser = new User({
-        name: "Admin User",
-        email: "admin@blog.com",
+        name: "Anime Insights Admin",
+        email: "admin@animeinsights.com",
         password: hashedPassword,
       });
       await adminUser.save();
-      console.log("Admin user created: admin@blog.com / admin123");
+      console.log(
+        "Admin user created: admin@animeinsights.com / AnimeInsights2024!"
+      );
     }
 
     // Delete existing posts

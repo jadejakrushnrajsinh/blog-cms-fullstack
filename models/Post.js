@@ -18,6 +18,22 @@ const postSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  category: {
+    type: String,
+    default: "Anime",
+    trim: true,
+  },
+  tags: [
+    {
+      type: String,
+      trim: true,
+    },
+  ],
+  slug: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
