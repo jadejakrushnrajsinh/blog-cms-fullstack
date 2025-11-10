@@ -15,18 +15,18 @@
 - Authentication: JWT-based.
 - File Uploads: For blog images or files.
 
-## What Needs Improvement
+## Improvement Plan (Priority Order)
 
-- **Security**: Add rate limiting, input validation, helmet, CSRF protection.
-- **Error Handling**: Better error handling in routes and middleware.
-- **Testing**: Add unit and integration tests.
-- **Environment Variables**: Ensure all sensitive data is in .env.
-- **Frontend Integration**: Improve JavaScript for better API integration.
-- **Documentation**: Update README with setup instructions.
-- **Performance**: Optimize database queries, add caching.
-- **Features**: Add comments, search, pagination.
-- **Deployment**: Add deployment scripts or Docker support.
-- **Code Organization**: Refactor for better modularity.
+1. **Mobile Responsiveness & Performance**: Add lazy loading for images, optimize thumbnails.
+2. **Visuals & Thumbnails**: Ensure all posts have optimized images, add alt tags.
+3. **Branding**: Create SVG logo, add creator photo/bio to about page, improve footer.
+4. **Categories**: Expand categories (Character Analysis, Industry Trends, etc.), make category page functional.
+5. **Posts & Content**: Add featured posts section, improve excerpts, add read time estimates.
+6. **SEO**: Add meta descriptions, Open Graph tags, structured data, sitemap.
+7. **Engagement**: Implement newsletter backend, add social share buttons, comments system.
+8. **Analytics**: Integrate Google Analytics.
+9. **Security/Legal**: Ensure HTTPS, add privacy/terms links.
+10. **Content Strategy**: Add internal linking, keyword optimization.
 
 ## TODO List
 
@@ -36,6 +36,22 @@
 - [x] Add contact form functionality.
 - [x] Create about, contact, and 404 pages.
 - [x] Seed database with sample posts.
+- [x] Add lazy loading for images in frontend.
+- [x] Optimize post thumbnails and add alt tags.
+- [x] Create SVG logo and update branding.
+- [x] Add creator photo/bio to about page.
+- [ ] Improve footer with better branding.
+- [ ] Expand categories and make category page functional.
+- [x] Add featured posts section to homepage.
+- [x] Improve post excerpts and add read time estimates.
+- [x] Add meta descriptions and Open Graph tags.
+- [x] Implement structured data and sitemap.
+- [ ] Implement newsletter backend.
+- [ ] Add social share buttons to posts.
+- [ ] Implement comments system.
+- [ ] Integrate Google Analytics.
+- [ ] Ensure HTTPS and update privacy/terms links.
+- [ ] Add internal linking and keyword optimization.
 - [ ] Add security middleware (helmet, rate limiting).
 - [ ] Implement input validation for all routes.
 - [ ] Add comprehensive error handling.
@@ -44,6 +60,5 @@
 - [ ] Update README with setup instructions.
 - [ ] Optimize database queries.
 - [ ] Add caching for posts.
-- [ ] Implement comments system.
 - [ ] Add search functionality.
 - [ ] Add deployment configuration.

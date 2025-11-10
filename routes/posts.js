@@ -140,13 +140,26 @@ router.post(
   upload.single("image"),
   async (req, res) => {
     try {
-      const { title, content, excerpt, status, category, tags } = req.body;
+      const {
+        title,
+        content,
+        excerpt,
+        status,
+        category,
+        tags,
+        featured,
+        readTime,
+      } = req.body;
 
       // Generate slug from title
       const slug = title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "");
+
+      // Calculate read time if not provided (rough estimate: 200 words per minute)
+      const calculatedReadTime =
+        readTime || Math.max(1, Math.ceil(content.split(" ").length / 200));
 
       const post = new Post({
         title,
@@ -157,6 +170,8 @@ router.post(
         tags: tags ? tags.split(",").map((tag) => tag.trim()) : [],
         slug,
         status: status || "draft",
+        featured: featured === "true" || featured === true,
+        readTime: calculatedReadTime,
         author: req.user.userId,
       });
 

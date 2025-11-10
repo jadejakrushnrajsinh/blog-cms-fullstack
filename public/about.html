@@ -66,17 +66,30 @@
             <div class="about-section">
                 <h2>Meet the Creator</h2>
                 <div class="creator-profile">
+                    <div class="creator-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+                            alt="Jadeja Krushnrajsinh Sinh - Founder of AnimeInsights" loading="lazy">
+                    </div>
                     <div class="creator-info">
                         <h3>Jadeja Krushnrajsinh Sinh</h3>
                         <p>Founder & Chief Writer</p>
                         <p>A passionate anime enthusiast with a background in literature and cultural studies. When not
                             writing about anime, you can find me exploring new series, attending conventions, or
-                            discussing storytelling techniques.</p>
+                            discussing storytelling techniques. My journey into anime began over a decade ago, and I've
+                            been fascinated by how this medium blends art, storytelling, and cultural insights.</p>
+                        <p><strong>Expertise:</strong> Character analysis, narrative structures, Japanese pop culture,
+                            and anime industry trends.</p>
                         <div class="creator-interests">
                             <span class="interest-tag">Story Analysis</span>
                             <span class="interest-tag">Character Development</span>
                             <span class="interest-tag">Cultural Studies</span>
                             <span class="interest-tag">Japanese Media</span>
+                            <span class="interest-tag">Industry Trends</span>
+                        </div>
+                        <div class="creator-social">
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
                         </div>
                     </div>
                 </div>
@@ -175,6 +188,19 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
+        .creator-image {
+            margin-right: 2rem;
+            flex-shrink: 0;
+        }
+
+        .creator-image img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+        }
+
         .creator-info h3 {
             color: var(--dark);
             margin-bottom: 0.5rem;
@@ -199,6 +225,28 @@
             font-size: 0.8rem;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
+        }
+
+        .creator-social {
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {

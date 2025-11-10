@@ -44,6 +44,14 @@ const postSchema = new mongoose.Schema({
     enum: ["draft", "published"],
     default: "draft",
   },
+  featured: {
+    type: Boolean,
+    default: false,
+  },
+  readTime: {
+    type: Number,
+    default: 5,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

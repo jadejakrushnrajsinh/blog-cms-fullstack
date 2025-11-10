@@ -4,7 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Insights Blog</title>
+    <title>Anime Insights Blog - Deep Dives into Anime Storytelling & Character Analysis</title>
+    <meta name="description" content="Discover in-depth anime analysis, character studies, industry insights, and cultural explorations. Your ultimate destination for thoughtful anime content and community discussions.">
+    <meta name="keywords" content="anime, anime analysis, character analysis, anime reviews, anime industry, anime culture, anime blogging, anime insights">
+    <meta name="author" content="Jadeja Krushnrajsinh Sinh">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://animeinsights.com/">
+    <meta property="og:title" content="Anime Insights Blog - Deep Dives into Anime Storytelling & Character Analysis">
+    <meta property="og:description" content="Discover in-depth anime analysis, character studies, industry insights, and cultural explorations. Your ultimate destination for thoughtful anime content and community discussions.">
+    <meta property="og:image" content="https://wallpaperaccess.com/full/39038.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://animeinsights.com/">
+    <meta property="twitter:title" content="Anime Insights Blog - Deep Dives into Anime Storytelling & Character Analysis">
+    <meta property="twitter:description" content="Discover in-depth anime analysis, character studies, industry insights, and cultural explorations. Your ultimate destination for thoughtful anime content and community discussions.">
+    <meta property="twitter:image" content="https://wallpaperaccess.com/full/39038.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Global Styles */
@@ -89,6 +109,11 @@
             align-items: center;
         }
 
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
         .logo span {
             color: var(--secondary);
         }
@@ -96,6 +121,11 @@
         .logo i {
             margin-right: 10px;
             color: var(--secondary);
+        }
+
+        /* Lazy loading for images */
+        .post-image img {
+            loading: lazy;
         }
 
         nav ul {
@@ -261,6 +291,49 @@
             font-size: 0.9rem;
             color: #888;
             margin-top: auto;
+        }
+
+        .post-read-time {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .featured-post {
+            border: 2px solid var(--secondary);
+            position: relative;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .featured-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+        }
+
+        .featured-section h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .featured-posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* Filters */
