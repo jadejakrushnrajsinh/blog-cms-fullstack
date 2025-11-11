@@ -3,7 +3,9 @@ const Post = require("./models/Post");
 const User = require("./models/User");
 const bcrypt = require("bcryptjs");
 
-const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/blogdb";
+const mongoUri =
+  process.env.MONGODB_URI ||
+  "mongodb://mongo:eYtMaAudYOkwfJmMtfuZfKFhJJLBPgrm@crossover.proxy.rlwy.net:48562";
 
 async function seedData() {
   try {

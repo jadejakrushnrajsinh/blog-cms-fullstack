@@ -66,7 +66,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const mongoUrl =
   process.env.MONGO_URL ||
   process.env.MONGODB_URI ||
-  "mongodb://localhost:27017/blogdb";
+  "mongodb://mongo:eYtMaAudYOkwfJmMtfuZfKFhJJLBPgrm@crossover.proxy.rlwy.net:48562";
 mongoose
   .connect(mongoUrl, {
     useNewUrlParser: true,
