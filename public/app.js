@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
   registerTab.classList.remove("active");
 
   // API base URL
-  const API_BASE = "/api";
+  const API_BASE = "https://blog-cms-fullstack-production.up.railway.app/api";
 
   // Helper: Set auth token
   function setAuthToken(token) {
