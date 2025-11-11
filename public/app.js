@@ -322,7 +322,13 @@ document.addEventListener("DOMContentLoaded", function () {
         currentUser = data.user;
         showDashboard();
       } else {
-        showAlert(data.message || "Login failed");
+        let errorMsg = "Login failed";
+        if (data.message === "Invalid credentials") {
+          errorMsg = "Wrong email or password. Please try again.";
+        } else if (data.message) {
+          errorMsg = data.message;
+        }
+        showAlert(errorMsg);
       }
     } catch (err) {
       showAlert("Login error: " + err.message);
