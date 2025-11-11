@@ -26,6 +26,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Get all posts for authenticated user (admin dashboard)
+router.get("/", authenticateToken, async (req, res) => {
+  try {
+    const posts = await Post.find({ author: req.user.userId })
+      .populate("author", "name email")
+      .sort({ createdAt: -1 });
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 // Get published posts (public)
 router.get("/public", async (req, res) => {
   try {
@@ -88,21 +100,6 @@ router.get("/public/slug/:slug", async (req, res) => {
     }
 
     res.json(post);
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
-
-// Get all posts (public for published, user's own for drafts)
-router.get("/", authenticateToken, async (req, res) => {
-  try {
-    const posts = await Post.find({
-      $or: [{ status: "published" }, { author: req.user.userId }],
-    })
-      .populate("author", "name email")
-      .sort({ createdAt: -1 });
-
-    res.json(posts);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
