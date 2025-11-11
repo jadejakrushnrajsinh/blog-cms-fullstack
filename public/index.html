@@ -862,7 +862,7 @@
                         <div class="error-icon">🔍</div>
                         <h2 class="error-title">No Posts Found</h2>
                         <p class="error-message">No posts match your search criteria. Try different keywords or browse all posts.</p>
-                        <a href="#" class="btn" onclick="resetFilters()">Browse All Posts</a>
+                        <a href="#" class="btn" id="reset-filters-btn">Browse All Posts</a>
                     </div>
                 `;
                 return;
@@ -877,7 +877,7 @@
                     </div>
                     <div class="post-content">
                         <span class="post-category">${post.category}</span>
-                        <h3 class="post-title"><a href="#" onclick="viewPost(${post.id})">${post.title}</a></h3>
+                        <h3 class="post-title"><a href="#" id="post-link-${post.id}">${post.title}</a></h3>
                         <p class="post-excerpt">${post.excerpt}</p>
                         <div class="post-meta">
                             <span>By ${post.author}</span>
@@ -936,7 +936,7 @@
                             <a href="#" class="logo"><i class="fas fa-dragon"></i>Anime<span>Insights</span></a>
                             <nav>
                                 <ul>
-                                    <li><a href="#" onclick="location.reload()"><i class="fas fa-home"></i> Home</a></li>
+                                    <li><a href="#" id="home-link"><i class="fas fa-home"></i> Home</a></li>
                                     <li><a href="#"><i class="fas fa-tags"></i> Categories</a></li>
                                     <li><a href="#"><i class="fas fa-user"></i> About</a></li>
                                     <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
@@ -960,7 +960,7 @@
                                 <p>${post.fullContent}</p>
                             </div>
                         </article>
-                        <a href="#" class="btn back-btn" onclick="location.reload()"><i class="fas fa-arrow-left"></i> Back to All Posts</a>
+                        <a href="#" class="btn back-btn" id="back-btn"><i class="fas fa-arrow-left"></i> Back to All Posts</a>
                     </main>
                     
                     <footer>
@@ -1059,18 +1059,40 @@
         }
 
         // Event Listeners
-        categoryFilters.forEach(filter => {
-            filter.addEventListener('click', () => {
-                categoryFilters.forEach(f => f.classList.remove('active'));
-                filter.classList.add('active');
-                filterPosts(filter.dataset.category);
+        document.addEventListener("DOMContentLoaded", function () {
+            categoryFilters.forEach(filter => {
+                filter.addEventListener('click', () => {
+                    categoryFilters.forEach(f => f.classList.remove('active'));
+                    filter.classList.add('active');
+                    filterPosts(filter.dataset.category);
+                });
             });
-        });
 
-        searchBtn.addEventListener('click', searchPosts);
-        searchInput.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') {
-                searchPosts();
+            searchBtn.addEventListener('click', searchPosts);
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchPosts();
+                }
+            });
+
+            // Add event listener for reset filters button
+            const resetFiltersBtn = document.getElementById('reset-filters-btn');
+            if (resetFiltersBtn) {
+                resetFiltersBtn.addEventListener('click', resetFilters);
+            }
+
+            // Add event listeners for post links
+            samplePosts.forEach(post => {
+                const postLink = document.getElementById(`post-link-${post.id}`);
+                if (postLink) {
+                    postLink.addEventListener('click', () => viewPost(post.id));
+                }
+            });
+
+            // Add event listener for home link
+            const homeLink = document.getElementById('home-link');
+            if (homeLink) {
+                homeLink.addEventListener('click', () => location.reload());
             }
         });
 
