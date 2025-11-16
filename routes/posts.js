@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const mongoose = require("mongoose");
 const Post = require("../models/Post");
 const { authenticateToken } = require("../middleware/auth");
 
@@ -74,6 +75,10 @@ router.get("/public", async (req, res) => {
 // Get single published post (public)
 router.get("/public/:id", async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid post ID" });
+    }
+
     const post = await Post.findOne({
       _id: req.params.id,
       status: "published",
