@@ -47,8 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
   loginTab.classList.add("active");
   registerTab.classList.remove("active");
 
-  // API base URL
-  const API_BASE = "https://blog-cms-fullstack-production.up.railway.app/api";
+  // API base URL (flexible for Railway deployment)
+  const RAILWAY_API_BASE =
+    "https://blog-cms-fullstack-production.up.railway.app/api";
+  const API_BASE =
+    window.location.hostname === "blog-cms-fullstack-production.up.railway.app"
+      ? RAILWAY_API_BASE
+      : "/api";
 
   // Helper: Set auth token
   function setAuthToken(token) {

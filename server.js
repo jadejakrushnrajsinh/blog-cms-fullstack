@@ -69,7 +69,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const mongoUrl =
   process.env.MONGO_URL ||
   process.env.MONGODB_URI ||
-  "mongodb://mongo:eYtMaAudYOkwfJmMtfuZfKFhJJLBPgrm@crossover.proxy.rlwy.net:48562";
+  "mongodb://mongo:tJiBVWYzkpJdbmWlsMgVJCBVmacngXAm@switchyard.proxy.rlwy.net:25716";
+
+console.log("Using MongoDB URL:", mongoUrl);
 
 mongoose
   .connect(mongoUrl, {
