@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-
   // Show single post detail view
   const postDetailSection = document.createElement("div");
   postDetailSection.id = "post-detail-section";
@@ -135,7 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
   backToListBtn.className = "btn btn-secondary";
   backToListBtn.addEventListener("click", () => {
     postDetailSection.classList.add("hidden");
-    document.getElementById("allPosts").parentElement.classList.remove("hidden");
+    document
+      .getElementById("allPosts")
+      .parentElement.classList.remove("hidden");
     clearPostDetail();
   });
   postDetailSection.appendChild(backToListBtn);
@@ -161,9 +162,13 @@ document.addEventListener("DOMContentLoaded", function () {
       titleElement.style.cursor = "pointer";
       titleElement.addEventListener("click", async () => {
         try {
+          console.log("Clicked post ID:", post._id);
           const postDetail = await fetchPostDetail(post._id);
+          console.log("Fetched post detail:", postDetail);
           showPostDetail(postDetail);
+          console.log("Displayed post detail section");
         } catch (err) {
+          console.error("Failed to load post:", err);
           alert("Failed to load post: " + err.message);
         }
       });
@@ -187,7 +192,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Show post detail content
   function showPostDetail(post) {
     postDetailTitle.textContent = post.title;
-    postDetailMeta.textContent = `By ${post.author.name} on ${new Date(post.createdAt).toLocaleDateString()}`;
+    postDetailMeta.textContent = `By ${post.author.name} on ${new Date(
+      post.createdAt
+    ).toLocaleDateString()}`;
     if (post.image) {
       postDetailImage.src = post.image;
       postDetailImage.style.display = "block";
