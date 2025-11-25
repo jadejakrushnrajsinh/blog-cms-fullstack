@@ -106,17 +106,99 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+
+  // Show single post detail view
+  const postDetailSection = document.createElement("div");
+  postDetailSection.id = "post-detail-section";
+  postDetailSection.className = "content-section hidden";
+
+  const postDetailTitle = document.createElement("h2");
+  postDetailTitle.id = "post-detail-title";
+  postDetailSection.appendChild(postDetailTitle);
+
+  const postDetailMeta = document.createElement("div");
+  postDetailMeta.id = "post-detail-meta";
+  postDetailSection.appendChild(postDetailMeta);
+
+  const postDetailImage = document.createElement("img");
+  postDetailImage.id = "post-detail-image";
+  postDetailImage.style.maxWidth = "100%";
+  postDetailImage.style.margin = "20px 0";
+  postDetailSection.appendChild(postDetailImage);
+
+  const postDetailContent = document.createElement("div");
+  postDetailContent.id = "post-detail-content";
+  postDetailSection.appendChild(postDetailContent);
+
+  const backToListBtn = document.createElement("button");
+  backToListBtn.textContent = "Back to Posts";
+  backToListBtn.className = "btn btn-secondary";
+  backToListBtn.addEventListener("click", () => {
+    postDetailSection.classList.add("hidden");
+    document.getElementById("allPosts").parentElement.classList.remove("hidden");
+    clearPostDetail();
+  });
+  postDetailSection.appendChild(backToListBtn);
+
+  document.body.appendChild(postDetailSection);
+
+  function clearPostDetail() {
+    postDetailTitle.textContent = "";
+    postDetailMeta.textContent = "";
+    postDetailImage.src = "";
+    postDetailImage.style.display = "none";
+    postDetailContent.innerHTML = "";
+  }
+
   // Render posts in dashboard and all blogs sections
   function renderPosts(posts) {
     blogListDashboard.innerHTML = "";
     blogListAll.innerHTML = "";
     posts.forEach((post) => {
       const card = createPostCard(post);
+      // Make the post title clickable for detail view
+      const titleElement = card.querySelector(".blog-title");
+      titleElement.style.cursor = "pointer";
+      titleElement.addEventListener("click", async () => {
+        try {
+          const postDetail = await fetchPostDetail(post._id);
+          showPostDetail(postDetail);
+        } catch (err) {
+          alert("Failed to load post: " + err.message);
+        }
+      });
+
       blogListAll.appendChild(card.cloneNode(true));
       if (post.author._id === currentUser.id) {
         blogListDashboard.appendChild(card);
       }
     });
+  }
+
+  // Fetch single post detail by ID
+  async function fetchPostDetail(postId) {
+    const res = await fetch(API_BASE + `/posts/public/${postId}`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch post detail");
+    }
+    return res.json();
+  }
+
+  // Show post detail content
+  function showPostDetail(post) {
+    postDetailTitle.textContent = post.title;
+    postDetailMeta.textContent = `By ${post.author.name} on ${new Date(post.createdAt).toLocaleDateString()}`;
+    if (post.image) {
+      postDetailImage.src = post.image;
+      postDetailImage.style.display = "block";
+    } else {
+      postDetailImage.style.display = "none";
+    }
+    postDetailContent.innerHTML = post.content;
+
+    // Hide posts list and show detail section
+    document.getElementById("allPosts").parentElement.classList.add("hidden");
+    postDetailSection.classList.remove("hidden");
   }
 
   // Create a blog post card element
